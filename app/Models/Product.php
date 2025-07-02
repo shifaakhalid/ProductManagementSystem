@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Models;
-
+use App\Models\category;
+use App\Models\Supplier;
+use App\Models\StockMovement;
+use App\Models\TransactionItem;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

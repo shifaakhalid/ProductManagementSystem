@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\storeproductRequest;
 use App\Http\Requests\updateproductRequest;
 use App\Models\Category;
-use App\Models\product;
+use App\Models\Product;
+use App\Models\Product\Product as ProductProduct;
 use App\Models\Supplier;
 use Database\Seeders\CategorySeeder;
 use Illuminate\Http\Request;
@@ -17,8 +18,8 @@ class productController extends Controller
      */
     public function index()
     {
-        $products = product::with('category')->paginate(10);
-        return view('products.index',compact('products'));
+        $products = Product::with('category')->paginate(10);
+        return view('products.index', compact('products'));
     }
 
     /**
@@ -29,7 +30,7 @@ class productController extends Controller
         $categories = Category::all();
         $suppliers = supplier::all();
 
-        return view('products.create',compact('categories','suppliers'));
+        return view('products.create', compact('categories', 'suppliers'));
     }
 
     /**
@@ -38,37 +39,36 @@ class productController extends Controller
 
 
 
-public function store(StoreProductRequest $request)
-{
-    $data = $request->validated();
-    $data['sku'] = $this->generateSKU($data['name']);
+    public function store(StoreProductRequest $request)
+    {
+        $data = $request->validated();
+        $data['sku'] = $this->generateSKU($data['name']);
 
-    if ($request->hasFile('image')) {
-        $data['image'] = $request->file('image')->store('products_image', 'public');
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('products_image', 'public');
+        }
+
+        Product::create($data);
+
+        return redirect()->route('index')->with('success', 'Product created successfully.');
     }
 
-    Product::create($data);
+    private function generateSKU($productName)
+    {
+        $slug = strtoupper(substr($productName, 0, 3));
+        $unique = strtoupper(uniqid());
+        return $slug . '-' . $unique;
+    }
 
-    return redirect()->route('index')->with('success', 'Product created successfully.');
-}
 
-private function generateSKU($productName)
-{
-    $slug = strtoupper(substr($productName, 0, 3));
-    $unique = strtoupper(uniqid());
-    return $slug . '-' . $unique;
-}
-
-    
 
     /**
      * Display the specified resource.
      */
-    public function show(product $product)
+    public function show(Product $product)
     {
-     
+
         return view('products.show', compact('product'));
-        
     }
 
     /**
@@ -76,34 +76,32 @@ private function generateSKU($productName)
      */
     public function edit(string $id)
     {
-        $categories = category::all();
-        return view('products.edit,', compact('products','categories'));
+        $categories = Category::all();
+        return view('products.edit,', compact('products', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(updateproductRequest $request, product $product)
+    public function update(updateproductRequest $request, Product $product)
     {
         $data = $request->validated();
 
-        if($request->hasFile('image')){
-            $data['image'] = $request->file('image')->store('products_images' , 'public');
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('products_images', 'public');
         }
-        $product -> update($data);
+        $product->update($data);
 
-        return redirect()->route('index')->with('success','products updated');
+        return redirect()->route('index')->with('success', 'products updated');
     }
 
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(product $product)
+    public function destroy(Product $product)
     {
         $product->delete();
-        return redirect()->route('products.index')->with('success','product deleted!');
+        return redirect()->route('products.index')->with('success', 'product deleted!');
     }
-
-    
 }

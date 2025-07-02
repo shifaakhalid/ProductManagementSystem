@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +6,7 @@
   <meta charset="UTF-8">
   <title>Register & Login Buttons</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="styleSheet" href="css\style.css">
+  <link rel="styleSheet" href="\css\welcome.css">
 </head>
 
 <div class="header">
@@ -15,7 +16,7 @@
   </div>
   <div class="header-right">
 
-    <body class="flex items-center justify-center h-screen bg-white-100">
+    <body class=" h-screen bg-white-100">
       <div class="space-x-4">
         <button onclick="window.location.href='{{ route('register') }}'" class="px-6 py-2 bg-blue-400 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition">
           Register
