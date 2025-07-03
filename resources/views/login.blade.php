@@ -5,6 +5,7 @@
   <title>Login Page</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 @extends('layouts.logo')
 @section('content')
 <body class="flex items-center justify-center min-h-screen bg-gray-100">
@@ -66,5 +67,10 @@
 </div>
 @endif
 @endsection
+
+
 </body>
 </html>
+
+
+

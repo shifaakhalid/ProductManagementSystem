@@ -11,11 +11,12 @@ class SupplierSeeder extends Seeder
      * Run the database seeds.
      */public function run()
 {
-   
-    Supplier::create(['name' => 'Supplier One']);
-    Supplier::create(['name' => 'Supplier Two']);
-    Supplier::create(['name' => 'Supplier Three']);
+  
+            $supplier = ['awais', 'raza', 'usman', 'talha'];
+
+        foreach ($supplier as $name) {
+            Supplier::create(['name' => $name]); //
+    }
+    }
 }
 
-
-}

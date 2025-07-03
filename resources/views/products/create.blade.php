@@ -18,14 +18,14 @@
 
         <h2 class="text-lg font-bold text-center mb-3">Add Product</h2>
 
-        <div class="mb-2">
-            <label class="block text-sm font-medium">Name:</label>
+     <div class="mb-2">
+          <label class="block text-sm font-medium">Name:</label>
             <input type="text" name="name" class="form-control w-full h-8 text-sm" value="{{ old('name') }}">
         </div>
 
         <div class="mb-2">
             <label class="block text-sm font-medium">Price:</label>
-            <input type="number" step="0.01" name="price" class="form-control w-full h-8 text-sm" value="{{ old('price') }}">
+            <input type="number" step="" name="price" class="form-control w-full h-8 text-sm" value="{{ old('price') }}">
         </div>
 
         <div class="mb-2">
@@ -35,9 +35,14 @@
 
         <div class="mb-2">
             <label class="block text-sm font-medium">Supplier ID:</label>
-            <input type="number" name="supplier_id" class="form-control w-full h-8 text-sm" value="{{ old('supplier_id') }}">
+          <select name="supplier_id" class="form-select w-full h-8 text-sm">
+                @foreach($suppliers as $supplier)
+                <option value="{{ $supplier->id }}" {{ old('category_id')==$supplier->id ? 'selected':'' }}>
+                    {{ $supplier->name }}
+                </option>
+                @endforeach
+            </select>
         </div>
-
         <div class="mb-2">
             <label class="block text-sm font-medium">Category:</label>
             <select name="category_id" class="form-select w-full h-8 text-sm">

@@ -28,9 +28,11 @@ class productController extends Controller
     public function create()
     {
         $categories = Category::all();
-        $suppliers = supplier::all();
+        $suppliers = Supplier::all();
 
         return view('products.create', compact('categories', 'suppliers'));
+       
+
     }
 
     /**
@@ -74,10 +76,12 @@ class productController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Product $product) 
     {
         $categories = Category::all();
-        return view('products.edit,', compact('products', 'categories'));
+         $suppliers = Supplier::all();
+
+      return view('products.edit', compact('product', 'categories', 'suppliers'));
     }
 
     /**
@@ -91,8 +95,10 @@ class productController extends Controller
             $data['image'] = $request->file('image')->store('products_images', 'public');
         }
         $product->update($data);
-
         return redirect()->route('index')->with('success', 'products updated');
+
+
+        
     }
 
 

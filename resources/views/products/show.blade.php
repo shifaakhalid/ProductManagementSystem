@@ -1,7 +1,7 @@
 @extends('layouts.app2')
 
 @section('content')
-<div class="w-full min-h-screen bg-white flex flex-col md:flex-row items-start md:items-center justify-center  gap-10 ">
+<div  class="w-full min-h-screen bg-white flex flex-col md:flex-row items-start md:items-center justify-center  gap-10  scroll ">
 
     <!-- Left Side: Image -->
     <div class="md:w-[50%] w-full flex justify-center ml-56 ">
