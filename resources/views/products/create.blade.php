@@ -13,13 +13,13 @@
 @section('content')
 <div class="w-full max-w-md mx-auto  h-8 text-sm  bg-white">
     <form method="POST" action="{{ route('products.store') }}" enctype="multipart/form-data"
-          class="w-full max-w-lg bg-white p-4 rounded-md shadow border border-gray-200">
+        class="w-full max-w-lg bg-white p-4 rounded-md shadow border border-gray-200">
         @csrf
 
         <h2 class="text-lg font-bold text-center mb-3">Add Product</h2>
 
-     <div class="mb-2">
-          <label class="block text-sm font-medium">Name:</label>
+        <div class="mb-2">
+            <label class="block text-sm font-medium">Name:</label>
             <input type="text" name="name" class="form-control w-full h-8 text-sm" value="{{ old('name') }}">
         </div>
 
@@ -35,7 +35,7 @@
 
         <div class="mb-2">
             <label class="block text-sm font-medium">Supplier ID:</label>
-          <select name="supplier_id" class="form-select w-full h-8 text-sm">
+            <select name="supplier_id" class="form-select w-full h-8 text-sm">
                 @foreach($suppliers as $supplier)
                 <option value="{{ $supplier->id }}" {{ old('category_id')==$supplier->id ? 'selected':'' }}>
                     {{ $supplier->name }}

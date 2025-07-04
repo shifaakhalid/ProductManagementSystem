@@ -9,11 +9,11 @@ class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
-     */public function run()
-{
-    $this->call([
-        SupplierSeeder::class,
-        CategorySeeder::class,
-    ]);
-}
+     */ public function run()
+    {
+        $this->call([
+            SupplierSeeder::class,
+            CategorySeeder::class,
+        ]);
+    }
 }

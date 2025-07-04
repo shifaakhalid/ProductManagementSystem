@@ -49,3 +49,6 @@ Route::post('/logout', function () {
     return redirect('/login'); // ← redirect to login or homepage
 })->name('logout');
 
+Route::get('/phpinfo', function () {
+    phpinfo();
+});

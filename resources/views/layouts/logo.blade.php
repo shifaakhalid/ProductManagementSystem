@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Register & Login Buttons</title>
+  <title>Product Manager</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="styleSheet" href="css\logo.css">
 </head>
