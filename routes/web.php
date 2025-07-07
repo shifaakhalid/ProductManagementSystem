@@ -13,7 +13,7 @@ Route::get('/', function () {
 
 // Auth Routes
 Route::view('/register', 'register')->name('register');
-Route::post('/registerSave', [UserController::class, 'register'])->name('registerSave');
+Route::post('/registerSave', [UserController::class, 'registerSave'])->name('registerSave');
 Route::view('/login', 'login')->name('login');
 Route::post('/loginMatch', [UserController::class, 'login'])->name('loginMatch');
 
