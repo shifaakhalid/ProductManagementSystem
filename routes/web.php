@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\POSController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
@@ -52,3 +55,13 @@ Route::post('/logout', function () {
 Route::get('/phpinfo', function () {
     phpinfo();
 });
+
+
+Route::get('/pos', [POSController::class, 'index']);
+Route::get('/products/search', [POSController::class,'search']);
+Route::post('/pos/complete-sale', [POSController::class, 'completeSale']);
+Route::get('/cart/add', [CartController::class, 'add']);
+Route::get('/cart/remove', [CartController::class, 'remove']);
+Route::get('/cart', [CartController::class, 'get']);
+Route::get('/checkout',[SaleController::class, 'store']);
+
