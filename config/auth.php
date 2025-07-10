@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'free_trial' => [
+            'driver' => 'session',
+            'provider' => 'free_trials',
+        ],
     ],
 
     /*
@@ -63,6 +67,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+        'free_trials' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\FreeTrial::class,
         ],
 
         // 'users' => [

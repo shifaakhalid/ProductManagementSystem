@@ -1,86 +1,98 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    @extends('layouts.poslayout')
-    @section('content')
-      <!-- Hero Section -->
-  <section class="text-center py-24 px-4">
-    <div class="max-w-3xl mx-auto">
-      <h2 class="text-5xl font-extrabold mb-4 gradient-text">Revolutionize Your Sales</h2>
-      <p class="text-lg text-gray-600 mb-8">Manage inventory, track sales, and accept payments — all in one elegant POS system.</p>
-      <a href="#" class="inline-block px-8 py-3 bg-gradient-to-r from-pink-500 to-blue-500 text-white rounded-full text-lg font-semibold shadow-lg hover:scale-105 transition">Start Free Trial</a>
-    </div>
-  </section>
+@extends('layouts.poslayout')
 
-  <!-- Features -->
-  <section class="py-20 bg-white">
-    <div class="max-w-6xl mx-auto px-4 text-center">
-      <h3 class="text-3xl font-bold mb-12 text-gray-800">POS Features That Empower You</h3>
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="bg-white/80 backdrop-blur p-6 rounded-2xl shadow-lg">
-          <div class="text-pink-500 text-4xl mb-4">📦</div>
-          <h4 class="text-xl font-semibold mb-2">Live Inventory</h4>
-          <p>Track your stock in real-time to avoid shortages or overstocking.</p>
-        </div>
-        <div class="bg-white/80 backdrop-blur p-6 rounded-2xl shadow-lg">
-          <div class="text-blue-500 text-4xl mb-4">⚡</div>
-          <h4 class="text-xl font-semibold mb-2">Speedy Checkout</h4>
-          <p>Complete transactions in seconds with barcode and quick-pay support.</p>
-        </div>
-        <div class="bg-white/80 backdrop-blur p-6 rounded-2xl shadow-lg">
-          <div class="text-pink-500 text-4xl mb-4">🔒</div>
-          <h4 class="text-xl font-semibold mb-2">Secure Payments</h4>
-          <p>Accept cards and wallets with end-to-end encryption and fraud detection.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+@section('content')
+<style>
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in-up {
+    animation: fadeInUp 1s ease-out both;
+  }
+</style>
 
-  <!-- Stats -->
-  <section class="bg-gradient-to-r from-blue-100 to-pink-100 py-16">
-    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-4 gap-6 text-center text-gray-800">
-      <div>
-        <h5 class="text-4xl font-bold text-pink-600">5K+</h5>
-        <p>Businesses Served</p>
+<!-- Hero Section -->
+<section class="text-center py-24 px-4 bg-gradient-to-br from-pink-50 to-blue-50">
+  <div class="max-w-3xl mx-auto animate-fade-in-up">
+    <h2 class="text-5xl font-extrabold mb-4 gradient-text">Revolutionize Your Sales</h2>
+    <p class="text-lg text-gray-600 mb-8">Smart inventory, fast checkout, secure payments — all in one POS system.</p>
+    <a href="{{ route('freetrial') }}" class="inline-block px-8 py-3 bg-gradient-to-r from-pink-500 to-blue-500 text-white rounded-full text-lg font-semibold shadow-lg hover:scale-105 transition">Start Free Trial</a>
+  </div>
+</section>
+
+<!-- Features -->
+<section class="py-20 bg-white">
+  <div class="max-w-6xl mx-auto px-4 text-center">
+    <h3 class="text-3xl font-bold mb-12 text-gray-800 animate-fade-in-up">POS Features That Empower You</h3>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="bg-white/80 backdrop-blur p-6 rounded-2xl shadow-lg hover:shadow-xl transition transform hover:-translate-y-2 animate-fade-in-up">
+        <div class="text-pink-500 text-4xl mb-4">📦</div>
+        <h4 class="text-xl font-semibold mb-2">Live Inventory</h4>
+        <p>Track your stock in real-time to avoid shortages or overstocking.</p>
       </div>
-      <div>
-        <h5 class="text-4xl font-bold text-blue-600">99.99%</h5>
-        <p>Uptime Guaranteed</p>
+      <div class="bg-white/80 backdrop-blur p-6 rounded-2xl shadow-lg hover:shadow-xl transition transform hover:-translate-y-2 animate-fade-in-up delay-100">
+        <div class="text-blue-500 text-4xl mb-4">⚡</div>
+        <h4 class="text-xl font-semibold mb-2">Speedy Checkout</h4>
+        <p>Complete transactions in seconds with barcode and quick-pay support.</p>
       </div>
-      <div>
-        <h5 class="text-4xl font-bold text-pink-600">24/7</h5>
-        <p>Support</p>
-      </div>
-      <div>
-        <h5 class="text-4xl font-bold text-blue-600">10M+</h5>
-        <p>Transactions Handled</p>
+      <div class="bg-white/80 backdrop-blur p-6 rounded-2xl shadow-lg hover:shadow-xl transition transform hover:-translate-y-2 animate-fade-in-up delay-200">
+        <div class="text-pink-500 text-4xl mb-4">🔒</div>
+        <h4 class="text-xl font-semibold mb-2">Secure Payments</h4>
+        <p>Accept cards and wallets with end-to-end encryption and fraud detection.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Testimonials -->
-  <section class="py-20 bg-white">
-    <div class="max-w-6xl mx-auto px-4 text-center">
-      <h3 class="text-3xl font-bold mb-12 text-gray-800">What Our Users Say</h3>
-      <div class="grid md:grid-cols-2 gap-10">
-        <div class="bg-pink-50 p-6 rounded-xl shadow-md">
-          <p class="italic text-gray-700">“This POS system transformed my retail workflow. I love the clean interface and instant updates!”</p>
-          <div class="mt-4 text-blue-600 font-semibold">— Zara, Boutique Owner</div>
-        </div>
-        <div class="bg-blue-50 p-6 rounded-xl shadow-md">
-          <p class="italic text-gray-700">“Fast, reliable, and super intuitive. Our team adapted in no time. Highly recommended!”</p>
-          <div class="mt-4 text-pink-600 font-semibold">— Ahmed, Store Manager</div>
-        </div>
+<!-- Stats -->
+<section class="bg-gradient-to-r from-blue-100 to-pink-100 py-16">
+  <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-4 gap-6 text-center text-gray-800 animate-fade-in-up">
+    <div>
+      <h5 class="text-4xl font-bold text-pink-600">5K+</h5>
+      <p>Businesses Served</p>
+    </div>
+    <div>
+      <h5 class="text-4xl font-bold text-blue-600">99.99%</h5>
+      <p>Uptime Guaranteed</p>
+    </div>
+    <div>
+      <h5 class="text-4xl font-bold text-pink-600">24/7</h5>
+      <p>Support</p>
+    </div>
+    <div>
+      <h5 class="text-4xl font-bold text-blue-600">10M+</h5>
+      <p>Transactions Handled</p>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="py-20 bg-white">
+  <div class="max-w-6xl mx-auto px-4 text-center">
+    <h3 class="text-3xl font-bold mb-12 text-gray-800 animate-fade-in-up">What Our Users Say</h3>
+    <div class="grid md:grid-cols-2 gap-10">
+      <div class="bg-pink-50 p-6 rounded-xl shadow-md transform hover:scale-105 transition duration-500 ease-in-out animate-fade-in-up">
+        <p class="italic text-gray-700">“This POS system transformed my retail workflow. I love the clean interface and instant updates!”</p>
+        <div class="mt-4 text-blue-600 font-semibold">— Zara, Boutique Owner</div>
+      </div>
+      <div class="bg-blue-50 p-6 rounded-xl shadow-md transform hover:scale-105 transition duration-500 ease-in-out delay-150 animate-fade-in-up">
+        <p class="italic text-gray-700">“Fast, reliable, and super intuitive. Our team adapted in no time. Highly recommended!”</p>
+        <div class="mt-4 text-pink-600 font-semibold">— Ahmed, Store Manager</div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-    @endsection
+<!-- Call to Action -->
+<section class="py-16 bg-gradient-to-r from-pink-500 to-blue-500 text-white text-center">
+  <div class="max-w-4xl mx-auto px-4 animate-fade-in-up">
+    <h2 class="text-3xl md:text-4xl font-bold mb-4">Ready to Simplify Your Sales?</h2>
+    <p class="mb-6 text-lg">Get started with POSMaster today. It's free and powerful!</p>
+    <a href="" class="inline-block px-6 py-3 bg-white text-pink-600 font-semibold rounded-full hover:bg-gray-100 transition">Try POS Now</a>
+  </div>
+</section>
+@endsection
+
 @section('scripts')
 <script>
   const csrfToken = '{{ csrf_token() }}';

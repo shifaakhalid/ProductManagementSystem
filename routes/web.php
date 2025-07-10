@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\FreeTrialController;
+use App\Http\Controllers\OnboardingController;
+use App\Http\Controllers\PaymentSetupController;
 use App\Http\Controllers\POSController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SaleController;
@@ -28,23 +31,23 @@ Route::view('show', 'show')->name('show');
 
 
 // Role-based Access
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin', fn() => 'Welcome Admin');
-});
+// Route::middleware(['auth', 'role:admin'])->group(function () {
+//     Route::get('/admin', fn() => 'Welcome Admin');
+// });
 
-Route::middleware(['auth', 'role:manager,cashier'])->group(function () {
-    Route::get('/pos', fn() => 'POS Area');
-});
+// Route::middleware(middleware: ['auth', 'role:manager,cashier'])->group(function () {
+//     Route::get('/pos', fn() => 'POS Area');
+// });
 
-Route::middleware(['auth'])->group(function () {
-    Route::resource('products', ProductController::class);
+// Route::middleware(['auth'])->group(function () {
+//     Route::resource('products', ProductController::class);
     // ya individually:
     // Route::get('/dashboard', [DashboardController::class, 'index']);
-});
+// });
 
 
 
-// ✅ Only this is needed for full CRUD: index, show, create, store, edit, update, destroy
+// full CRUD: index, show, create, store, edit, update, destroy
 Route::resource('products', ProductController::class);
 
 Route::post('/logout', function () {
@@ -56,8 +59,35 @@ Route::get('/phpinfo', function () {
     phpinfo();
 });
 
+Route::view('/home', 'pos.home')->name('home');
+Route::view('/features', 'pos.features')->name('features');
+Route::view('/pricing', 'pos.pricing')->name('pricing');
+Route::view('/contact', 'pos.contact')->name('contact');
 
-Route::get('/pos', [POSController::class, 'index']);
+// Free Trial
+Route::view('/freetrial', 'pos.freetrial')->name('freetrial');
+Route::view('/businessLogin', 'pos.freetriallogin')->name('freetriallogin');
+Route::post('/business-login', [POSController::class, 'businessLogin'])->name('business-login');
+Route::post('/freetrial', [FreeTrialController::class, 'store'])->name('freetrial.submit');
+
+// Onboarding (NO MIDDLEWARE here!)
+Route::view('/onboarding', 'pos.onboarding')->name('onboarding');
+
+Route::get('/onboarding/payment', [OnboardingController::class, 'payment'])->name('onboarding.payment');
+Route::get('/pos/onboarding/product', [OnboardingController::class, 'product'])->name('onboarding-product');
+Route::post('pos/onboarding/complete', [OnboardingController::class, 'complete'])->name('onboarding.complete');
+Route::get('/pos/onboarding/payment', [OnboardingController::class, 'payment'])->name('onboarding-payment');
+// Route::get('/pos/onboarding/paymentdetails', [OnboardingController::class, 'paymentdetails'])->name('onboarding-payment');
+
+Route::view('/pos/onboarding/paymentdetails', 'pos.onboarding.paymentdetails')->name('paymentdeatils');
+Route::post('/pos/onboarding/payment', [PaymentSetupController::class, 'storePaymentDetails'])->name('onboarding.payment.store');
+
+
+
+// POS route protected by middleware
+Route::get('/pos/products', [POSController::class, 'getProducts'])->name('pos.products');
+Route::get('/shop', [POSController::class, 'shop'])->name('shop');
+
 Route::get('/products/search', [POSController::class,'search']);
 Route::post('/pos/complete-sale', [POSController::class, 'completeSale']);
 Route::get('/cart/add', [CartController::class, 'add']);
