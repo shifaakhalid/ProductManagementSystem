@@ -1,0 +1,30 @@
+@font-face {
+    font-family: "myfont";
+    src: url(/Exo2-VariableFont_wght.ttf);
+   
+}
+
+*{
+    font-family: myfont;
+}
+.header-left{ 
+    width: 50%;
+    display: flex;
+    margin-bottom: 40%;
+    padding-left: 5%;
+    
+}
+
+.header-left img{
+
+   height: 60px;
+ 
+}
+.header-left h1{
+      
+    position: relative;
+    top: 20px;
+    font-size: 25px;
+    font-weight: 900;
+   
+}

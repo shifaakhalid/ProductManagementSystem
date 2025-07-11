@@ -1,0 +1,24 @@
+FROM php:8.2-fpm
+
+RUN apt-get update && apt-get install -y \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip unzip curl git libzip-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl zip gd
+
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www
+
+COPY . .
+
+RUN composer install --no-dev --optimize-autoloader
+
+CMD php artisan serve --host=0.0.0.0 --port=8080
+mysql -h tramway.proxy.rlwy.net -u root -p OwTzKwRhdmZkWUQKoAyYYOyHGzEILqnf --port 11300 --protocol=TCP railway
+
+mysql://root:OwTzKwRhdmZkWUQKoAyYYOyHGzEILqnf@tramway.proxy.rlwy.net:11300/railway
