@@ -1,0 +1,124 @@
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f7fa;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .pos-container {
+        max-width: 1200px;
+        margin: auto;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        padding: 30px;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    #search {
+        width: 100%;
+        padding: 12px 15px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    #results {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 15px;
+    }
+
+    .product-card {
+        background: #fff;
+        border: 1px solid #eee;
+        padding: 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .product-card:hover {
+        background: #f0f8ff;
+        border-color: #007bff;
+    }
+
+    .product-name {
+        font-weight: bold;
+        font-size: 16px;
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+    .product-price {
+        color: #28a745;
+        font-weight: 500;
+    }
+
+    table#cart-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 30px;
+    }
+
+    #cart-table th, #cart-table td {
+        padding: 12px 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    #cart-table th {
+        background: #007bff;
+        color: white;
+    }
+
+    #cart-total {
+        text-align: right;
+        font-size: 20px;
+        font-weight: bold;
+        margin-top: 20px;
+        color: #333;
+    }
+
+    .remove-btn {
+        color: red;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    form#checkout-form {
+        margin-top: 30px;
+    }
+
+    form#checkout-form input,
+    form#checkout-form select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+    form#checkout-form button {
+        padding: 12px 20px;
+        background-color: #28a745;
+        color: white;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    form#checkout-form button:hover {
+        background-color: #218838;
+    }
