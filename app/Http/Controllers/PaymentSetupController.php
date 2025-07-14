@@ -18,15 +18,15 @@ class PaymentSetupController extends Controller
 //   dd(auth('free_trial')->id());
     PaymentSetup::create([
        
-        'user_id' => auth('free_trial')->id(), // ✅ Corrected here
+        'user_id' => auth('free_trial')->id(), 
         'method' => 'easypaisa',
         'account_name' => $request->wallet_name,
         'account_number' => $request->wallet_number,
         'reference' => $request->wallet_reference,
     ]);
 
-    // return redirect()->route('paymentdetails')->with('success', 'Easypaisa setup saved!');
-    dd('heheheheheheh!');
+
+    dd('hello!');
 }
 
 }

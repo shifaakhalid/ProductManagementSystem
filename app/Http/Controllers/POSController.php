@@ -14,68 +14,160 @@ class POSController extends Controller
 {
 
 
-public function businessLogin(Request $request)
-{
-    $request->validate([
-        'business_email' => 'required|email',
-        'business_password' => 'required|string',
-    ]);
+    public function businessLogin(Request $request)
+    {
+        $request->validate([
+            'business_email' => 'required|email',
+            'business_password' => 'required|string',
+        ]);
 
-    $credentials = [
-        'business_email' => $request->business_email,
-        'password' => $request->business_password,
-    ];
+        $credentials = [
+            'business_email' => $request->business_email,
+            'password' => $request->business_password,
+        ];
 
-    $user = FreeTrial::where('business_email', $credentials['business_email'])->first();
+        $user = FreeTrial::where('business_email', $credentials['business_email'])->first();
 
-    // 🔍 Debug info
-    // dd([
-    //     'entered_email' => $credentials['business_email'],
-    //     'entered_password' => $credentials['password'],
-    //     'user_found' => $user !== null,
-    //     'db_password' => optional($user)->business_password,
-    //     'password_match' => $user ? Hash::check($credentials['password'], $user->business_password) : 'no user found',
-    // ]);
-
-    if (Auth::guard('free_trial')->attempt($credentials)) {
-        return redirect()->route('onboarding');
-    } else {
-        return back()->with('error', 'Invalid login credentials');
+        if (Auth::guard('free_trial')->attempt($credentials)) {
+            return redirect()->route('onboarding');
+        } else {
+            return back()->with('error', 'Invalid login credentials');
+        }
     }
-}
-
-
-
 
     public function getProducts()
     {
-        $products = Product::all(); // or paginate(20) if too many
+        $products = Product::all(); 
         return view('pos.shop', compact('products'));
     }
     public function shop()
     {
-        $products = Product::latest()->paginate(12); // change to all() if no pagination needed
+        $products = Product::latest()->paginate(12); 
         return view('pos.shop', compact('products'));
     }
-//search function
 
-public function search(Request $request)
-{
-    $query = $request->get('query');
+    //search function
+    public function search(Request $request)
+    {
+        $query = $request->get('query');
 
-    $products = Product::where('name', 'LIKE', "%{$query}%")
-        ->orWhere('sku', 'LIKE', "%{$query}%")
-        ->get();
-        // $html='';
-        // foreach ($products as $product){
-        //     $html .= "<div>{$product->name}</div>";
-        // }
-            // return response($products);
+       
+        $results = Product::where('name', 'LIKE', "%{$query}%")->get();
 
-    $html = view('pos.shop', compact('products'))->render();
+     
+        $html = '';
+        foreach ($results as $product) {
+            $html .= view('partials.product-card', compact('product'))->render();
+        }
 
-    return response()->json(['html' => $html]);
-}
+        return response($html);
+    }
+
+
+    public function cart()
+    {
+        $cart = session()->get('cart', []);
+        return view('pos.cart', compact('cart'));
+    }
+
+
+
+    public function addToCart(Request $request)
+    {
+        $productId = $request->input('product_id');
+        $product = Product::find($productId);
+
+        if (!$product) {
+            return response()->json(['success' => false, 'message' => 'Product not found']);
+        }
+
+        $cart = session()->get('cart', []);
+
+        if (isset($cart[$productId])) {
+            $cart[$productId]['quantity']++;
+        } else {
+            $cart[$productId] = [
+                'name' => $product->name,
+                'price' => $product->price,
+                'quantity' => 1,
+                'image' => $product->image ?? null,
+
+            ];
+        }
+
+        session()->put('cart', $cart);
+
+        return response()->json(['success' => true]);
+    }
+
+    public function update(Request $request)
+    {
+        $productId = $request->input('product_id');
+        $action = $request->input('action');
+        $cart = session()->get('cart', []);
+
+        if (!isset($cart[$productId])) {
+            return response()->json(['success' => false, 'message' => 'Product not found in cart']);
+        }
+        
+        if ($action === 'increase') {
+            $cart[$productId]['quantity']++;
+        } elseif ($action === 'decrease') {
+            $cart[$productId]['quantity'] = max(1, $cart[$productId]['quantity'] - 1);
+        }
+
+        session()->put('cart', $cart);
+
+
+        $subtotal = 0;
+        foreach ($cart as $item) {
+            $subtotal += $item['price'] * $item['quantity'];
+        }
+
+        $taxRate = 0.13;
+        $taxAmount = $subtotal * $taxRate;
+        $totalWithTax = $subtotal + $taxAmount;
+
+        
+        return response()->json([
+            'success' => true,
+            'quantity' => $cart[$productId]['quantity'],
+            'total' => $cart[$productId]['price'] * $cart[$productId]['quantity'],
+            'subtotal' => number_format($subtotal, 2),
+            'tax' => number_format($taxAmount, 2),
+            'grand_total' => number_format($totalWithTax, 2),
+        ]);
+    }
+
+
+
+    public function remove(Request $request)
+    {
+        $id = $request->input('product_id');
+        $action = $request->input('action');
+        $cart = session()->get('cart', []);
+
+        if (isset($cart[$id])) {
+            unset($cart[$id]);
+            session()->put('cart', $cart);
+
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Product not found in cart']);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     public function completeSale(Request $request)

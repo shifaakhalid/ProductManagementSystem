@@ -51,8 +51,8 @@ Route::view('show', 'show')->name('show');
 Route::resource('products', ProductController::class);
 
 Route::post('/logout', function () {
-    Auth::logout(); // ← logs the user out
-    return redirect('/login'); // ← redirect to login or homepage
+    Auth::logout(); 
+    return redirect('/login'); 
 })->name('logout');
 
 Route::get('/phpinfo', function () {
@@ -70,7 +70,7 @@ Route::view('/businessLogin', 'pos.freetriallogin')->name('freetriallogin');
 Route::post('/business-login', [POSController::class, 'businessLogin'])->name('business-login');
 Route::post('/freetrial', [FreeTrialController::class, 'store'])->name('freetrial.submit');
 
-// Onboarding (NO MIDDLEWARE here!)
+// Onboarding
 Route::view('/onboarding', 'pos.onboarding')->name('onboarding');
 
 Route::get('/onboarding/payment', [OnboardingController::class, 'payment'])->name('onboarding.payment');
@@ -90,9 +90,11 @@ Route::get('/shop', [POSController::class, 'shop'])->name('shop');
 Route::get('/search', [POSController::class, 'search'])->name('search');
 
 
-// POS route protected by middleware
+// cart
 Route::post('/pos/complete-sale', [POSController::class, 'completeSale']);
-Route::get('/cart/add', [CartController::class, 'add']);
-Route::get('/cart/remove', [CartController::class, 'remove']);
-Route::get('/cart', [CartController::class, 'get']);
-Route::get('/checkout',[SaleController::class, 'store']);
+Route::post('/cart/add', [POSController::class, 'addToCart'])->name('addToCart');
+Route::post('/cart/update', [POSController::class, 'update'])->name('cart.update');
+Route::post('/cart/updateCart', [POSController::class, 'updateCartBadge'])->name('cart.updateCartbadge');
+Route::post('/cart/remove', [POSController::class, 'remove'])->name('cart.remove');
+Route::get('/cart', [POSController::class, 'cart'])->name('cart');
+Route::get('/checkout',[POSController::class, 'store']);

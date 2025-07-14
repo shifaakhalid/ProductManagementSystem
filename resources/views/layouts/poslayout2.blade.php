@@ -43,15 +43,31 @@
         <span>Products</span>
     </a>
 
-    {{-- Cart --}}
-    <a href="" class="flex items-center gap-1 hover:text-pink-600 transition">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 5h12m-4 0a1 1 0 1 1-2 0m4 0a1 1 0 1 1-2 0" />
-        </svg>
-        <span>Cart</span>
-    </a>
+
+  <a href="{{ route('cart') }}" class="relative flex items-center gap-1 hover:text-pink-600 transition">
+    <!-- Cart Icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 5h12m-4 0a1 1 0 1 1-2 0m4 0a1 1 0 1 1-2 0" />
+    </svg>
+    <!-- 🔴 Count Badge -->
+    <span id="cart-count-badge"
+        class="absolute  -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+        {{ session('cart') ? count(session('cart')) : 0 }}
+    </span>
+    <span >Cart</span>
+</a>
 
 </nav>
+
+
+
+
+
+
+
+
+
 
       </nav>
     </div>
@@ -75,5 +91,6 @@
   </footer>
 
   @yield('scripts')
+  
 </body>
 </html>

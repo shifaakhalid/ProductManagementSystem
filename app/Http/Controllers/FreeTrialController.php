@@ -16,7 +16,7 @@ class FreeTrialController extends Controller
 {
     public function store(Request $request)
     {
-        // Check if business already exists
+        
         $existingBusiness = DB::table('free_trials')
             ->where('business_email', $request->business_email)
             ->first();
