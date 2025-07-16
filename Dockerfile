@@ -28,8 +28,8 @@ COPY . .
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Expose port for Laravel's built-in server
+# Expose HTTP port
 EXPOSE 10000
 
-# Start Laravel dev server on 0.0.0.0:10000 (Render will connect to this)
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=10000"]
+# Run migrations then serve the app
+CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=10000
