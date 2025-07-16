@@ -20,7 +20,7 @@
 </head>
 <body class="bg-gradient-to-br from-pink-50 via-white to-blue-50 text-gray-800 font-sans">
 
-  <!-- Navbar -->
+ 
   <header class="bg-white/80 backdrop-blur shadow-md sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
       <h1 class="text-3xl font-bold gradient-text">SaleMart</h1>
@@ -33,7 +33,7 @@
     </div>
   </header>
 
-  <!-- Main Content -->
+
   <main>
     @yield('content')
   </main>

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('payment_setups', function (Blueprint $table) {
             // $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id')->constrained('free_trials')->onDelete('cascade');
             $table->string('method');
             $table->string('account_name');
             $table->string('account_number');

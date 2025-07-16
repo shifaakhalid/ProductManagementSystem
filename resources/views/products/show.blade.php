@@ -1,49 +1,63 @@
 @extends('layouts.app2')
 
 @section('content')
-    <div class="w-full min-h-screen bg-white flex flex-col md:flex-row items-start md:items-center justify-center  gap-10  ">
+<style>
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out both;
+  }
+</style>
 
-        <!-- Left Side: Image -->
-        <div class="md:w-[30%] w-full flex justify-center ml-[30%]  mb-[10%]">
-            <div class="bg-gray-100 p-8 rounded-lg shadow-md">
-                @if (!empty($product->image))
-                    <img src="{{ asset('storage/' . $product->image) }}" alt="Product Image"
-                        class="w-[250px] h-auto object-contain rounded">
-                @else
-                    <p class="text-gray-500 text-center">No image available.</p>
-                @endif
-            </div>
-        </div>
+<div class="min-h-screen bg-white flex flex-col lg:flex-row items-center justify-center px-7 py-18 gap-5 animate-fade-in-up">
 
-        <!-- Right Side: Details -->
-        <div class="md:w-[60%] w-full flex justify-start  mb-[10%]">
-            <div class="space-y-4 w-full max-w-xl">
-                <h2 class="text-4xl font-bold text-gray-800">{{ $product->name ?? 'No Name' }}</h2>
+  <!-- Product Image -->
+  <div class="w-full max-w-sm bg-white-50 p-6 rounded-2xl shadow-lg text-center">
+    @if (!empty($product->image))
+      <img src="{{ asset('storage/' . $product->image) }}"
+           alt="Product Image"
+           class="w-full h-auto object-contain rounded mb-4">
+    @else
+      <p class="text-gray-500">No image available.</p>
+    @endif
+  </div>
 
-                <div class="text-lg text-gray-700">
-                    <p><span class="font-semibold">SKU:</span> {{ $product->sku ?? 'N/A' }}</p>
-                    <p><span class="font-semibold">Price:</span> ${{ $product->price ?? '0.00' }}</p>
-                    <p><span class="font-semibold">Stock:</span> {{ $product->stock ?? '0' }}</p>
-                    <p><span class="font-semibold">Category:</span> {{ $product->category->name ?? 'N/A' }}</p>
-                    <p><span class="font-semibold">Supplier:</span> {{ $product->supplier->name ?? 'N/A' }}</p>
-                </div>
+  <!-- Product Info -->
+  <div class="w-full max-w-xl bg-white p-8 rounded-2xl shadow-lg">
+    <h2 class="text-3xl font-extrabold text-gray-800 mb-4">{{ $product->name ?? 'No Name' }}</h2>
 
-                <!-- Optional: Buttons -->
-                <div class="flex gap-4 pt-4">
-                    <a href="{{ route('products.edit', $product->id) }}"
-                        class="px-5 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">Edit</a>
-
-                    <form method="POST" action="{{ route('products.destroy', $product->id) }}"
-                        onsubmit="return confirm('Are you sure you want to delete this product?')">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="px-5 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition">
-                            Delete
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-
+    <div class="space-y-2 text-base text-gray-700">
+      <p><span class="font-semibold text-gray-800">SKU:</span> {{ $product->sku ?? 'N/A' }}</p>
+      <p><span class="font-semibold text-gray-800">Price:</span> ${{ $product->price ?? '0.00' }}</p>
+      <p><span class="font-semibold text-gray-800">Stock:</span> {{ $product->stock ?? '0' }}</p>
+      <p><span class="font-semibold text-gray-800">Category:</span> {{ $product->category->name ?? 'N/A' }}</p>
+      <p><span class="font-semibold text-gray-800">Supplier:</span> {{ $product->supplier->name ?? 'N/A' }}</p>
     </div>
+
+    <!-- Buttons -->
+    <div class="flex flex-wrap gap-4 mt-6">
+      <a href="{{ route('products.edit', $product->id) }}"
+         class="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-full shadow-md hover:scale-105 transition">
+          Edit
+      </a>
+
+      <form method="POST" action="{{ route('products.destroy', $product->id) }}"
+            onsubmit="return confirm('Are you sure you want to delete this product?')">
+        @csrf
+        @method('DELETE')
+        <button type="submit"
+                class="px-6 py-2 bg-gradient-to-r from-red-500 to-pink-500 text-white font-semibold rounded-full shadow-md hover:scale-105 transition">
+          Delete
+        </button>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+  <footer class="text-center text-sm text-gray-500 py-4">
+    &copy; {{ now()->year }} Product Manager. All rights reserved.
+  </footer>
 @endsection

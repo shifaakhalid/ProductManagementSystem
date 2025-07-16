@@ -36,8 +36,10 @@
         </div>
     </div>
     {{-- </form> --}}
+    
     <!-- products -->
     @if ($products->count())
+    
     <div id="all-products" class="  grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 px-4">
         @foreach ($products as $product)
         <div
@@ -58,7 +60,9 @@
 
             <div class="mt-auto">
                 <p class="text-pink-600 font-bold text-lg mb-3">Rs. {{ $product->price }}</p>
-                <button onclick="addToCart({{ $product->id }})"
+                <button
+                    type="button"
+                    onclick="addToCart({{ $product->id }})"
                     class="w-full py-2 rounded-full bg-gradient-to-r from-pink-500 to-blue-500 text-white font-medium shadow-md hover:scale-105 transition">
                     Add to Cart
                 </button>
@@ -85,14 +89,14 @@
         let value = this.value.trim();
 
         if (value === '') {
-           
+
             document.getElementById('search-result').innerHTML = '';
             document.getElementById('all-products').style.display = 'grid';
             document.getElementById('pagination-links').style.display = 'block';
             return;
         }
 
-       
+
         fetch(`/search?query=${encodeURIComponent(value)}`)
             .then(response => response.text())
             .then(data => {
@@ -107,30 +111,29 @@
     });
 
 
-function addToCart(productId) {
-    fetch("{{ route('addToCart') }}", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-        },
-        body: JSON.stringify({
-            product_id: productId
-        })
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.success) {
-            updateCartBadge(data.cartCount);
-        } else {
-            alert('❌ ' + data.message);
-        }
-    })
-    .catch(error => console.error('Error adding to cart:', error));
-    
-}
+    function addToCart(productId) {
+         console.log("Adding product ID to cart:", productId);
+        fetch("{{ route('addToCart') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    product_id: productId
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    updateCartBadge(data.cartCount);
+                } else {
+                    alert('❌ ' + data.message);
+                }
+            })
+            .catch(error => console.error('Error adding to cart:', error));
 
-   
+    }
 </script>
 
 

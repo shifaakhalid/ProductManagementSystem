@@ -3,7 +3,7 @@
 @section('content')
 <div id="cart" class="space-y-4">
     @forelse ($cart as $id => $item)
-    <div class="flex items-center justify-between bg-white rounded-2xl shadow p-4">
+    <div class="flex items-center justify-between bg-white rounded-2xl shadow p-4"  id="cart-item-{{ $id }}" class= "cart-item">
         <!-- Image -->
         <div class="w-20 h-20 rounded overflow-hidden mr-4">
             @if (!empty($item['image']))
@@ -75,7 +75,7 @@ $totalWithTax = $subtotal + $taxAmount;
 @section('scripts')
 <script>
     function removeFromCart(productId) {
-        fetch(`/cart/remove`, {
+        fetch("{{ route('cart.remove') }}", {
                 method: "POST",
                 headers: {
                     "X-CSRF-TOKEN": "{{ csrf_token() }}",
@@ -89,7 +89,10 @@ $totalWithTax = $subtotal + $taxAmount;
             .then(data => {
                 if (data.success) {
                      updateCartBadge(data.cartCount);
-                    location.reload(); 
+                    const itemElement = document.getElementById(`cart-item-${productId}`);
+                    if (itemElement) {
+                        itemElement.remove();
+                    }
                 } else {
                     alert(data.message || 'Failed to remove item from cart.');
                 }

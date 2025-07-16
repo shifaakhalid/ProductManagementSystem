@@ -10,7 +10,7 @@
         </div>
     @endif
 
-    <form action="" method="POST" class="bg-white p-6 rounded-xl shadow-lg space-y-6">
+    <form action="{{ route('onboarding.payment.details.store') }}" method="POST" class="bg-white p-6 rounded-xl shadow-lg space-y-6">
         @csrf
 
         <p class="text-gray-600 mb-4">Choose how you want to accept payments:</p>

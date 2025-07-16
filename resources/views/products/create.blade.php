@@ -1,68 +1,92 @@
-@extends('layouts.app2')
 
-@if($errors->any())
-<div class="alert alert-danger px-4">
-    <ul>
-        @foreach($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
+
+@extends('layouts.app2')
+<style>
+    body{
+        overflow: scroll;
+    }
+</style>
 
 @section('content')
-<div class="w-full max-w-md mx-auto  h-8 text-sm  bg-white">
+
+<div style="overflow:visible"class="w-full max-w-md mx-auto mt-6">
+    {{-- Validation Errors --}}
+    @if($errors->any())
+        <div class="mb-4 bg-red-100 text-red-700 p-3 rounded shadow">
+            <ul class="list-disc list-inside text-sm">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form method="POST" action="{{ route('products.store') }}" enctype="multipart/form-data"
-        class="w-full max-w-lg bg-white p-4 rounded-md shadow border border-gray-200">
+        class="bg-white p-6 rounded-lg shadow border border-gray-200 space-y-4">
         @csrf
 
-        <h2 class="text-lg font-bold text-center mb-3">Add Product</h2>
+        <h2 class="text-lg font-bold text-center text-blue-600">Add Product</h2>
 
-        <div class="mb-2">
-            <label class="block text-sm font-medium">Name:</label>
-            <input type="text" name="name" class="form-control w-full h-8 text-sm" value="{{ old('name') }}">
+    
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Name:</label>
+            <input type="text" name="name" value="{{ old('name') }}"
+                class="w-full border border-gray-300 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring focus:border-blue-400">
         </div>
 
-        <div class="mb-2">
-            <label class="block text-sm font-medium">Price:</label>
-            <input type="number" step="" name="price" class="form-control w-full h-8 text-sm" value="{{ old('price') }}">
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Price:</label>
+            <input type="number" name="price" step="any" value="{{ old('price') }}"
+                class="w-full border border-gray-300 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring focus:border-blue-400">
         </div>
 
-        <div class="mb-2">
-            <label class="block text-sm font-medium">Stock:</label>
-            <input type="number" name="stock" class="form-control w-full h-8 text-sm" value="{{ old('stock') }}">
+    
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Stock:</label>
+            <input type="number" name="stock" value="{{ old('stock') }}"
+                class="w-full border border-gray-300 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring focus:border-blue-400">
         </div>
 
-        <div class="mb-2">
-            <label class="block text-sm font-medium">Supplier ID:</label>
-            <select name="supplier_id" class="form-select w-full h-8 text-sm">
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Supplier:</label>
+            <select name="supplier_id"
+                class="w-full border border-gray-300 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring focus:border-blue-400">
                 @foreach($suppliers as $supplier)
-                <option value="{{ $supplier->id }}" {{ old('category_id')==$supplier->id ? 'selected':'' }}>
-                    {{ $supplier->name }}
-                </option>
+                    <option value="{{ $supplier->id }}" {{ old('supplier_id') == $supplier->id ? 'selected' : '' }}>
+                        {{ $supplier->name }}
+                    </option>
                 @endforeach
             </select>
         </div>
-        <div class="mb-2">
-            <label class="block text-sm font-medium">Category:</label>
-            <select name="category_id" class="form-select w-full h-8 text-sm">
+
+      
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Category:</label>
+            <select name="category_id"
+                class="w-full border border-gray-300 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring focus:border-blue-400">
                 @foreach($categories as $category)
-                <option value="{{ $category->id }}" {{ old('category_id')==$category->id ? 'selected':'' }}>
-                    {{ $category->name }}
-                </option>
+                    <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                        {{ $category->name }}
+                    </option>
                 @endforeach
             </select>
         </div>
 
-        <div class="mb-3">
-            <label class="block text-sm font-medium">Image:</label>
-            <input type="file" name="image" class="form-control w-full h-8 text-sm">
+ 
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Image:</label>
+            <input type="file" name="image"
+                class="w-full text-sm border border-gray-300 rounded px-3 py-1.5 file:bg-gray-100 file:border-0 file:py-1 file:px-2 file:rounded file:text-gray-700">
         </div>
 
-        <button
-            class="w-full px-4 py-1.5 bg-blue-500 text-white text-sm font-semibold rounded hover:bg-blue-600 transition">
-            Save
-        </button>
+     
+        <div>
+            <button type="submit"
+                class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 rounded transition">
+                Save Product
+            </button>
+        </div>
     </form>
 </div>
 @endsection

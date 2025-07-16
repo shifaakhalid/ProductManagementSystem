@@ -11,6 +11,7 @@ use App\Http\Controllers\UserController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 // Homepage
 Route::get('/', function () {
@@ -80,7 +81,7 @@ Route::get('/pos/onboarding/payment', [OnboardingController::class, 'payment'])-
 // Route::get('/pos/onboarding/paymentdetails', [OnboardingController::class, 'paymentdetails'])->name('onboarding-payment');
 
 Route::view('/pos/onboarding/paymentdetails', 'pos.onboarding.paymentdetails')->name('paymentdetails');
-Route::post('/pos/onboarding/payment', [PaymentSetupController::class, 'storePaymentDetails'])->name('onboarding.payment.details.store');
+Route::post('/pos/onboarding/paymentdetails', [PaymentSetupController::class, 'storePaymentDetails'])->name('onboarding.payment.details.store');
 
 //products shop
 Route::get('/pos/products', [POSController::class, 'getProducts'])->name('pos.products');
@@ -88,6 +89,9 @@ Route::get('/shop', [POSController::class, 'shop'])->name('shop');
 // Route::view('/shop', [POSController::class, 'shop'])->name('shop');
 //search
 Route::get('/search', [POSController::class, 'search'])->name('search');
+
+//dashboard
+Route::view('/pos/dashboard', 'pos.posdashboard')->name('dashboard');
 
 
 // cart
@@ -97,4 +101,4 @@ Route::post('/cart/update', [POSController::class, 'update'])->name('cart.update
 Route::post('/cart/updateCart', [POSController::class, 'updateCartBadge'])->name('cart.updateCartbadge');
 Route::post('/cart/remove', [POSController::class, 'remove'])->name('cart.remove');
 Route::get('/cart', [POSController::class, 'cart'])->name('cart');
-Route::get('/checkout',[POSController::class, 'store']);
+// Route::get('/checkout',[POSController::class, 'store']);

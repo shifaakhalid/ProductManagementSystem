@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <title>Product Manager</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="styleSheet" href="css\logo.css">
 </head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
 
-  <div class="header-left">
-    <img src= "{{  asset('Assets/logo1.png') }}"  alt="">
-     <h1>Product Manager</h1>
-  </div>  {{-- Page Content --}}
-    <main class="content" style="width:100%; height: 80%; position: relative; top: 20%; display: flex;">
-        
+  <!-- Header -->
+  <header class="w-full flex items-center justify-between px-6 py-4 bg-white shadow-md">
+    <div class="flex items-center space-x-3">
+      <img src="{{ asset('Assets/logo1.png') }}" alt="Logo" class="w-10 h-10 object-contain">
+      <h1 class="text-xl md:text-2xl font-bold text-gray-800">Product Manager</h1>
+    </div>
+  </header>
 
-        @yield('content')
-    </main>
+  <!-- Main Content -->
+  <main class="">
+    <div class="">
+      @yield('content')
+    </div>
+  </main>
 
+</body>
+</html>

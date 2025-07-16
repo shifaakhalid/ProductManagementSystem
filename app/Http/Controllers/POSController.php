@@ -37,12 +37,14 @@ class POSController extends Controller
 
     public function getProducts()
     {
-        $products = Product::all(); 
+        $products = Product::all();
         return view('pos.shop', compact('products'));
     }
     public function shop()
     {
-        $products = Product::latest()->paginate(12); 
+        
+        $products = Product::latest()->paginate(12);
+        session(['products' => $products]);
         return view('pos.shop', compact('products'));
     }
 
@@ -51,10 +53,10 @@ class POSController extends Controller
     {
         $query = $request->get('query');
 
-       
+
         $results = Product::where('name', 'LIKE', "%{$query}%")->get();
 
-     
+
         $html = '';
         foreach ($results as $product) {
             $html .= view('partials.product-card', compact('product'))->render();
@@ -96,8 +98,10 @@ class POSController extends Controller
         }
 
         session()->put('cart', $cart);
-
-        return response()->json(['success' => true]);
+        return response()->json(data: [
+            'success' => true,
+            'cartCount' => array_sum(array_column($cart, 'quantity'))
+        ]);
     }
 
     public function update(Request $request)
@@ -109,7 +113,7 @@ class POSController extends Controller
         if (!isset($cart[$productId])) {
             return response()->json(['success' => false, 'message' => 'Product not found in cart']);
         }
-        
+
         if ($action === 'increase') {
             $cart[$productId]['quantity']++;
         } elseif ($action === 'decrease') {
@@ -128,7 +132,7 @@ class POSController extends Controller
         $taxAmount = $subtotal * $taxRate;
         $totalWithTax = $subtotal + $taxAmount;
 
-        
+
         return response()->json([
             'success' => true,
             'quantity' => $cart[$productId]['quantity'],
@@ -136,6 +140,8 @@ class POSController extends Controller
             'subtotal' => number_format($subtotal, 2),
             'tax' => number_format($taxAmount, 2),
             'grand_total' => number_format($totalWithTax, 2),
+              'cartCount' => array_sum(array_column($cart, 'quantity'))
+        
         ]);
     }
 
@@ -143,27 +149,27 @@ class POSController extends Controller
 
     public function remove(Request $request)
     {
-        $id = $request->input('product_id');
-        $action = $request->input('action');
+        $productId = $request->input('product_id');
         $cart = session()->get('cart', []);
 
-        if (isset($cart[$id])) {
-            unset($cart[$id]);
+        if (isset($cart[$productId])) {
+            unset($cart[$productId]);
             session()->put('cart', $cart);
 
-            return response()->json(['success' => true]);
+            return response()->json([
+                'success' => true,
+                // 'cartCount' => count($cart),
+             'cartCount' => array_sum(array_column($cart, 'quantity'))
+
+            ]);
         }
 
-        return response()->json(['success' => false, 'message' => 'Product not found in cart']);
+        return response()->json([
+            'success' => false,
+            'message' => 'Product not found in cart.'
+        
+        ]);
     }
-
-
-
-
-
-
-
-
 
 
 

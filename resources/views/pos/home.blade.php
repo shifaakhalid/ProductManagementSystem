@@ -91,7 +91,7 @@
     <a href="" class="inline-block px-6 py-3 bg-white text-pink-600 font-semibold rounded-full hover:bg-gray-100 transition">Try POS Now</a>
   </div>
 </section>
-@endsection
+@endsection  like the theme
 
 @section('scripts')
 <script>
