@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Faker\Guesser\Name;
 use Illuminate\Foundation\Http\FormRequest;
 
-class storeproductRequest extends FormRequest
+class storeProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
