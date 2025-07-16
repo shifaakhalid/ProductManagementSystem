@@ -28,7 +28,8 @@ COPY . .
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Expose port 9000 and start php-fpm server
-EXPOSE 9000
+# Expose port for Laravel's built-in server
+EXPOSE 10000
 
-CMD ["php-fpm"]
+# Start Laravel dev server on 0.0.0.0:10000 (Render will connect to this)
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=10000"]
