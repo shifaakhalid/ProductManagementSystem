@@ -22,9 +22,9 @@
 
             <!-- Quantity Controls -->
             <div class="mt-2 flex items-center space-x-2">
-                <button onclick="update({{ $id }}, 'decrease')" class="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300">-</button>
-                <span id="quantity-{{ $id }}" class="px-3 text-gray-700 font-medium">{{ $item['quantity'] }}</span>
-                <button onclick="update({{ $id }}, 'increase')" class="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300">+</button>
+                <button onclick="update('{{ $id }}', 'decrease')" class="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300">-</button>
+                <span id="quantity-('{{ $id }}')" class="px-3 text-gray-700 font-medium">{{ $item['quantity'] }}</span>
+                <button onclick="update('{{ $id }}', 'increase')" class="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300">+</button>
             </div>
 
             <!-- Total Price -->
@@ -35,7 +35,7 @@
 
         <!-- Remove Button -->
         <div>
-            <button onclick="removeFromCart({{ $id }})" class="text-red-500 hover:text-red-700 text-sm">Remove</button>
+            <button onclick="removeFromCart('{{ $id }}')" class="text-red-500 hover:text-red-700 text-sm">Remove</button>
         </div>
     </div>
     @empty
@@ -88,7 +88,7 @@ $totalWithTax = $subtotal + $taxAmount;
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                     updateCartBadge(data.cartCount);
+                     updateCartBadge(data.totalQuantity);
                     const itemElement = document.getElementById(`cart-item-${productId}`);
                     if (itemElement) {
                         itemElement.remove();
@@ -117,6 +117,7 @@ $totalWithTax = $subtotal + $taxAmount;
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
+                    updateCartBadge(data.totalQuantity);
                     document.getElementById(`quantity-${productId}`).innerText = data.quantity;
                     document.getElementById(`total-${productId}`).innerText = 'Rs. ' + data.total;
                     document.getElementById('footer-subtotal').innerText = 'Rs. ' + data.subtotal;

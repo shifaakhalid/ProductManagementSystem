@@ -12,12 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('payment_setups', function (Blueprint $table) {
-            // $table->id();
+            $table->id();
+            $table->enum('method', ['easypaisa', 'jazzcash', 'bank']);
             $table->foreignId('user_id')->constrained('free_trials')->onDelete('cascade');
-            $table->string('method');
-            $table->string('account_name');
-            $table->string('account_number');
-            $table->string('reference')->nullable();
+            $table->string('easypaisa_account_name')->nullable();
+            $table->string('easypaisa_account_number')->nullable();
+            $table->string('easypaisa_account_reference')->nullable();
+            $table->string('jazzcash_account_name')->nullable();
+            $table->string('jazzcash_account_number')->nullable();
+            $table->string('bank_title')->nullable();
+            $table->string('bank_name')->nullable();
+            $table->string('bank_number')->nullable();
             $table->timestamps();
         });
     }

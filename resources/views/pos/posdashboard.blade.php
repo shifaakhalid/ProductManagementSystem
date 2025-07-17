@@ -16,7 +16,11 @@
         </div>
         <div class="bg-white p-6 rounded-2xl shadow text-center">
             <p class="text-sm text-gray-500">Cart Items</p>
-            <h2 class="text-2xl font-bold text-pink-600 mt-2">{{ count(session('cart', [])) }}</h2>
+            @php
+    $cart = session('cart', []);
+    $cartCount = collect($cart)->sum('quantity');
+@endphp
+            <h2 class="text-2xl font-bold text-pink-600 mt-2">{{ $cartCount }}</h2>
         </div>
         <div class="bg-white p-6 rounded-2xl shadow text-center">
             <p class="text-sm text-gray-500">Total Revenue</p>

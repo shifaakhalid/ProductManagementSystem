@@ -9,9 +9,15 @@ class PaymentSetup extends Model
 {
   protected $fillable = [
     'user_id',
-    'method',
-    'account_name',
-    'account_number',
-    'reference',
+        'method',
+        'easypaisa_account_name',
+        'easypaisa_account_number',
+        'easypaisa_account_reference',
+        'jazzcash_account_name',
+        'jazzcash_account_number',
+        'bank_title',
+        'bank_name',
+        'bank_number',
+
 ];
 }

@@ -73,10 +73,10 @@ return [
             'model' => App\Models\FreeTrial::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'user' => [
+            'driver' => 'database',
+            'table' => 'users',
+        ],
     ],
 
     /*

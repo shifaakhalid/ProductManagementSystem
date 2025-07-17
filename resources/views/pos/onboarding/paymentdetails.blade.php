@@ -24,17 +24,17 @@
 
         <div class="mb-4">
             <label class="block font-medium mb-1">Account Holder Name</label>
-            <input type="text" name="wallet_name" class="w-full border rounded px-4 py-2" placeholder="e.g., Ali Khan">
+            <input type="text" name="easypaisa_account_name" class="w-full border rounded px-4 py-2" placeholder="e.g., Ali Khan">
         </div>
 
         <div class="mb-4">
             <label class="block font-medium mb-1">Mobile Number</label>
-            <input type="text" name="wallet_number" class="w-full border rounded px-4 py-2" placeholder="e.g., 03XXXXXXXXX">
+            <input type="text" name="easypaisa_account_number" class="w-full border rounded px-4 py-2" placeholder="e.g., 03XXXXXXXXX">
         </div>
 
         <div class="mb-4">
             <label class="block font-medium mb-1">CNIC / Business Name (Optional)</label>
-            <input type="text" name="wallet_reference" class="w-full border rounded px-4 py-2" placeholder="42101-1234567-1 or My Store">
+            <input type="text" name="easypaisa_account_reference" class="w-full border rounded px-4 py-2" placeholder="42101-1234567-1 or My Store">
         </div>
     </div>
 
@@ -44,12 +44,12 @@
 
         <div class="mb-4">
             <label class="block font-medium mb-1">Account Holder Name</label>
-            <input type="text" name="jazz_name" class="w-full border rounded px-4 py-2" placeholder="e.g., Sana Malik">
+            <input type="text" name="jazzcash_account_name" class="w-full border rounded px-4 py-2" placeholder="e.g., Sana Malik">
         </div>
 
         <div class="mb-4">
             <label class="block font-medium mb-1">Mobile Number</label>
-            <input type="text" name="jazz_number" class="w-full border rounded px-4 py-2" placeholder="e.g., 03XXXXXXXXX">
+            <input type="text" name="jazzcash_account_number" class="w-full border rounded px-4 py-2" placeholder="e.g., 03XXXXXXXXX">
         </div>
     </div>
 
@@ -59,17 +59,17 @@
 
         <div class="mb-4">
             <label class="block font-medium mb-1">Account Title</label>
-            <input type="text" name="bank_name" class="w-full border rounded px-4 py-2" placeholder="e.g., Muhammad Usman">
+            <input type="text" name="bank_title" class="w-full border rounded px-4 py-2" placeholder="e.g., Muhammad Usman">
         </div>
 
         <div class="mb-4">
             <label class="block font-medium mb-1">Bank Name</label>
-            <input type="text" name="bank_title" class="w-full border rounded px-4 py-2" placeholder="e.g., Meezan Bank">
+            <input type="text" name="bank_name" class="w-full border rounded px-4 py-2" placeholder="e.g., Meezan Bank">
         </div>
 
         <div class="mb-4">
             <label class="block font-medium mb-1">Account Number / IBAN</label>
-            <input type="text" name="iban" class="w-full border rounded px-4 py-2" placeholder="e.g., PK12MEZN1234567890123456">
+            <input type="text" name="bank_number" class="w-full border rounded px-4 py-2" placeholder="e.g., PK12MEZN1234567890123456">
         </div>
     </div>
 

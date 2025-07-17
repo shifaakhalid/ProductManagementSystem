@@ -42,7 +42,7 @@ class POSController extends Controller
     }
     public function shop()
     {
-        
+
         $products = Product::latest()->paginate(12);
         session(['products' => $products]);
         return view('pos.shop', compact('products'));
@@ -78,15 +78,15 @@ class POSController extends Controller
     {
         $productId = $request->input('product_id');
         $product = Product::find($productId);
-
+        $cart = session()->get('cart', []);
         if (!$product) {
             return response()->json(['success' => false, 'message' => 'Product not found']);
         }
 
-        $cart = session()->get('cart', []);
+
 
         if (isset($cart[$productId])) {
-            $cart[$productId]['quantity']++;
+           $cart[$productId]['quantity'] += 1;
         } else {
             $cart[$productId] = [
                 'name' => $product->name,
@@ -96,11 +96,12 @@ class POSController extends Controller
 
             ];
         }
-
         session()->put('cart', $cart);
+        $totalQuantity = collect($cart)->sum('quantity');
+
         return response()->json(data: [
             'success' => true,
-            'cartCount' => array_sum(array_column($cart, 'quantity'))
+            'totalQuantity' => $totalQuantity,
         ]);
     }
 
@@ -114,13 +115,14 @@ class POSController extends Controller
             return response()->json(['success' => false, 'message' => 'Product not found in cart']);
         }
 
+
+
+        $totalQuantity = collect($cart)->sum('quantity');
         if ($action === 'increase') {
             $cart[$productId]['quantity']++;
         } elseif ($action === 'decrease') {
             $cart[$productId]['quantity'] = max(1, $cart[$productId]['quantity'] - 1);
         }
-
-        session()->put('cart', $cart);
 
 
         $subtotal = 0;
@@ -132,7 +134,7 @@ class POSController extends Controller
         $taxAmount = $subtotal * $taxRate;
         $totalWithTax = $subtotal + $taxAmount;
 
-
+        session()->put('cart', $cart);
         return response()->json([
             'success' => true,
             'quantity' => $cart[$productId]['quantity'],
@@ -140,8 +142,9 @@ class POSController extends Controller
             'subtotal' => number_format($subtotal, 2),
             'tax' => number_format($taxAmount, 2),
             'grand_total' => number_format($totalWithTax, 2),
-              'cartCount' => array_sum(array_column($cart, 'quantity'))
-        
+            'cartCount' => array_sum(array_column($cart, 'quantity')),
+            'totalQuantity' => $totalQuantity,
+
         ]);
     }
 
@@ -154,24 +157,28 @@ class POSController extends Controller
 
         if (isset($cart[$productId])) {
             unset($cart[$productId]);
+            
             session()->put('cart', $cart);
-
+         $totalQuantity = collect($cart)->sum('quantity');
             return response()->json([
                 'success' => true,
+                 'totalQuantity' => $totalQuantity,
                 // 'cartCount' => count($cart),
-             'cartCount' => array_sum(array_column($cart, 'quantity'))
-
             ]);
         }
-
         return response()->json([
             'success' => false,
-            'message' => 'Product not found in cart.'
-        
+            'message' => 'Product not found in cart.',
+
         ]);
     }
 
-
+    public function updateCartBadge()
+    {
+        $cart = session()->get('cart', []);
+        $totalQuantity = collect($cart)->sum('quantity');
+        return response()->json(['totalQuantity' => $totalQuantity]);
+    }
 
 
 

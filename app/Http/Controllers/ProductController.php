@@ -1,9 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Http\Requests\storeproductRequest;
-use App\Http\Requests\updateproductRequest;
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateproductRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Product\Product as ProductProduct;
@@ -71,7 +70,7 @@ class productController extends Controller
     }
 
   
-    public function update(updateproductRequest $request, Product $product)
+    public function update(UpdateproductRequest $request, Product $product)
     {
         $data = $request->validated();
 
@@ -79,7 +78,7 @@ class productController extends Controller
             $data['image'] = $request->file('image')->store('products_images', 'public');
         }
         $product->update($data);
-        return redirect()->route('index')->with('success', 'products updated');
+        return redirect()->route('products.index')->with('success', 'products updated');
 
 
         

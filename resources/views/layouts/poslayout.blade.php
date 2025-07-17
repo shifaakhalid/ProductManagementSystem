@@ -1,26 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>POSMaster - Smart POS System</title>
   <script src="https://cdn.tailwindcss.com"></script>
   @if(session('success'))
   <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4 text-center">
     {{ session('success') }}
   </div>
-@endif
+  @endif
   <style>
     .gradient-text {
       background: linear-gradient(to right, #ec4899, #3b82f6);
+      background-clip: text;
       -webkit-background-clip: text;
+
+      color: transparent;
       -webkit-text-fill-color: transparent;
+
     }
   </style>
 </head>
+
 <body class="bg-gradient-to-br from-pink-50 via-white to-blue-50 text-gray-800 font-sans">
 
- 
+
   <header class="bg-white/80 backdrop-blur shadow-md sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
       <h1 class="text-3xl font-bold gradient-text">SaleMart</h1>
@@ -52,4 +58,5 @@
 
   @yield('scripts')
 </body>
+
 </html>

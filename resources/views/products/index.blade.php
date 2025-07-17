@@ -1,14 +1,11 @@
 @extends('layouts.app2')
-
+ 
+  
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
     <h2 class="text-2xl font-extrabold text-gray-800 mb-4">📦 All Products</h2>
 
-    @if(session('success'))
-    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-        {{ session('success') }}
-    </div>
-    @endif
+   
 
     <div class="overflow-x-auto bg-white shadow-md rounded-lg">
         <table class="min-w-full table-auto text-sm text-left text-gray-600">

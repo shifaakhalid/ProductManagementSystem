@@ -62,7 +62,7 @@
                 <p class="text-pink-600 font-bold text-lg mb-3">Rs. {{ $product->price }}</p>
                 <button
                     type="button"
-                    onclick="addToCart({{ $product->id }})"
+                    onclick="addToCart('{{ $product->id }}')"
                     class="w-full py-2 rounded-full bg-gradient-to-r from-pink-500 to-blue-500 text-white font-medium shadow-md hover:scale-105 transition">
                     Add to Cart
                 </button>
@@ -126,7 +126,8 @@
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    updateCartBadge(data.cartCount);
+                  updateCartBadge(data.totalQuantity);
+
                 } else {
                     alert('❌ ' + data.message);
                 }
