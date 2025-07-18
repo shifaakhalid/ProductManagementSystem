@@ -18,7 +18,7 @@ return new class extends Migration
         $table->string('transaction_id')->nullable();
         $table->decimal('amount', 10, 2);
         $table->string('status'); // success, failed, pending
-        $table->json('response')->nullable(); // Optional: to store full gateway response
+        $table->text ('response')->nullable(); // Optional: to store full gateway response
         $table->timestamps();
     });
 }
