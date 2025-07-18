@@ -1,5 +1,5 @@
 <?php
-
+use Stripe\Stripe;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\FreeTrialController;
 use App\Http\Controllers\OnboardingController;
@@ -80,8 +80,8 @@ Route::post('pos/onboarding/complete', [OnboardingController::class, 'complete']
 Route::get('/pos/onboarding/payment', [OnboardingController::class, 'payment'])->name('onboarding-payment');
 // Route::get('/pos/onboarding/paymentdetails', [OnboardingController::class, 'paymentdetails'])->name('onboarding-payment');
 
-Route::view('/pos/onboarding/paymentdetails', 'pos.onboarding.paymentdetails')->name('paymentdetails');
-Route::post('/pos/onboarding/paymentdetails', [PaymentSetupController::class, 'storePaymentDetails'])->name('onboarding.payment.details.store');
+// Route::view('/pos/onboarding/paymentdetails', 'pos.onboarding.paymentdetails')->name('paymentdetails');
+// Route::post('/pos/onboarding/paymentdetails', [PaymentSetupController::class, 'storePaymentDetails'])->name('onboarding.payment.details.store');
 
 //products shop
 Route::get('/pos/products', [POSController::class, 'getProducts'])->name('pos.products');
@@ -102,3 +102,11 @@ Route::post('/cart/updateCart', [POSController::class, 'updateCartBadge'])->name
 Route::post('/cart/remove', [POSController::class, 'remove'])->name('cart.remove');
 Route::get('/cart', [POSController::class, 'cart'])->name('cart');
 // Route::get('/checkout',[POSController::class, 'store']);
+
+
+
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PaymentDetailsController;
+
+Route::get('/stripe', [PaymentDetailsController::class, 'stripeForm'])->name('stripe.form');
+Route::post('/stripe/pay', [PaymentDetailsController::class, 'pay'])->name('stripe.pay');

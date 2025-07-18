@@ -63,7 +63,7 @@ $totalWithTax = $subtotal + $taxAmount;
 
         </div>
         <div>
-            <a href=""
+            <a href="{{ route('stripe.form') }}"
                 class="bg-gradient-to-r from-blue-500 to-pink-500 text-white px-5 py-2 rounded-full shadow hover:scale-105 transition">
                 Proceed to Checkout
             </a>

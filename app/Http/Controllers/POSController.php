@@ -115,15 +115,12 @@ class POSController extends Controller
             return response()->json(['success' => false, 'message' => 'Product not found in cart']);
         }
 
-
-
         $totalQuantity = collect($cart)->sum('quantity');
         if ($action === 'increase') {
             $cart[$productId]['quantity']++;
         } elseif ($action === 'decrease') {
             $cart[$productId]['quantity'] = max(1, $cart[$productId]['quantity'] - 1);
         }
-
 
         $subtotal = 0;
         foreach ($cart as $item) {
