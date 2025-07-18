@@ -28,7 +28,9 @@ COPY . .
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Expose port 9000 and start php-fpm server
-EXPOSE 9000
+# Expose HTTP port
+EXPOSE 10000
 
-CMD ["php-fpm"]
+# Run migrations then serve the app
+CMD php artisan migrate:fresh  --force --seed  && php artisan serve --host=0.0.0.0 --port=10000  && php artisan storage:link
+

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\category;
+use App\Models\Category;
 use App\Models\Supplier;
 use App\Models\StockMovement;
 use App\Models\TransactionItem;
@@ -23,7 +23,7 @@ class Product extends Model
 
     public function category()
     {
-        return $this->belongsTo(category::class);
+        return $this->belongsTo(Category::class);
     }
 
     public function supplier()
