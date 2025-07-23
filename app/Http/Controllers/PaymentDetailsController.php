@@ -28,7 +28,7 @@ class PaymentDetailsController extends Controller
                 'description' => 'laravel Stripe Payment',
                 'source' => $request->stripeToken,
             ]);
-
+            // changes 
             PaymentDetails::create([
                 'user_id' => auth()->id(),
                 'payment_method' => 'stripe',
