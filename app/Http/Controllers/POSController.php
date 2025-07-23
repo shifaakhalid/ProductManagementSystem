@@ -93,6 +93,7 @@ class POSController extends Controller
                 'price' => $product->price,
                 'quantity' => 1,
                 'image' => $product->image ?? null,
+                'grand_total' => $product->price * 1,
 
             ];
         }
@@ -102,6 +103,7 @@ class POSController extends Controller
         return response()->json(data: [
             'success' => true,
             'totalQuantity' => $totalQuantity,
+            'grand_total' => $product->price * 1,
         ]);
     }
 
@@ -115,12 +117,15 @@ class POSController extends Controller
             return response()->json(['success' => false, 'message' => 'Product not found in cart']);
         }
 
+
+
         $totalQuantity = collect($cart)->sum('quantity');
         if ($action === 'increase') {
             $cart[$productId]['quantity']++;
         } elseif ($action === 'decrease') {
             $cart[$productId]['quantity'] = max(1, $cart[$productId]['quantity'] - 1);
         }
+
 
         $subtotal = 0;
         foreach ($cart as $item) {
@@ -211,4 +216,27 @@ class POSController extends Controller
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
     }
+public function checkout()
+{
+    $products = session('cart', []); 
+
+    $subtotal = 0;
+
+    foreach ($products as $item) {
+        $subtotal += $item['price'] * $item['quantity'];
+    }
+
+    $taxRate = 0.13;
+    $taxAmount = $subtotal * $taxRate;
+    $totalWithTax = $subtotal + $taxAmount;
+
+    return view('pos.stripe.paymentdetails', [
+        'products' => $products,
+        'totalWithTax' => $totalWithTax,
+       
+    ]);
+}
+
+
+
 }

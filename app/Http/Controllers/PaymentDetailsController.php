@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Models\PaymentDetails;
+use App\Models\Receipt;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -12,35 +12,105 @@ use Stripe\Stripe;
 
 class PaymentDetailsController extends Controller
 {
-
-
     public function stripeForm()
     {
-        return view('pos.stripe.form');
+        return view('pos.stripe.paymentdetails');
     }
-    public function pay(Request $request)
+
+    public function store(Request $request)
     {
-        Stripe::setApiKey(config('stripe.secret'));
+
+        $request->validate([
+            'totalWithTax' => 'required|numeric|min:0.01',
+            'stripeToken' => 'required|string',
+        ]);
+
+        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+
         try {
-            $charge = Charge::create([
-                'amount' => 1000,
+            $amount = round($request->totalWithTax * 100); // convert to cents
+
+            if ($amount < 1) {
+                return back()->with('error', 'Amount too small to process.');
+            }
+
+            $charge = $stripe->charges->create([
+                'amount' => $amount,
                 'currency' => 'usd',
-                'description' => 'laravel Stripe Payment',
                 'source' => $request->stripeToken,
-            ]);
-            // changes 
-            PaymentDetails::create([
-                'user_id' => auth()->id(),
-                'payment_method' => 'stripe',
-                'transaction_id' => $charge->id,
-                'amount' => $charge->amount / 100,
-                'status' => 'success',
-                'response' => json_encode($charge)
+                'description' => 'POS Checkout Payment',
             ]);
 
-            return back()->with('success', 'payment successful');
+            return view('store.receipt')->with('success', 'Payment successful!');
         } catch (\Exception $e) {
-            return back()->with('error', 'payment Failed');
+            return redirect()->back()->with('error', 'Payment failed: ' . $e->getMessage());
         }
     }
+
+
+
+
+public function storeReceiptDetails(Request $request)
+{
+    // Validate input first
+    $request->validate([
+        'totalWithTax' => 'required|numeric|min:0.01',
+        'stripeToken' => 'required|string',
+    ]);
+
+    // Get the cart from session
+    $products = session('cart', []);
+
+    // Calculate subtotal, tax, and total
+    $subtotal = array_sum(array_map(function ($item) {
+        return $item['price'] * $item['quantity'];
+    }, $products));
+    $tax = $subtotal * 0.13;
+    $total = $subtotal + $tax;
+
+    // Get user from free_trial guard
+$user = Auth::guard('free_trial')->user();
+if ($user) {
+     $user->name;
+} else {
+    echo 'User not logged in';
+}
+
+    // Create the receipt
+    $receipt = Receipt::create([
+        'customer_name' => $user->name,
+        'email' => $user->email,
+        'products' => json_encode($products),
+        'subtotal' => $subtotal,
+        'taxAmount' => $tax,
+        'total_amount' => $total,
+        'payment_method' => 'Stripe',
+        'payment_status' => 'Paid',
+        'transaction_id' => $request->stripeToken, // You might want to store the actual charge ID later
+    ]);
+
+    // Proceed with Stripe charge
+    $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+
+    try {
+        $amount = round($request->totalWithTax * 100); // cents
+
+        if ($amount < 1) {
+            return back()->with('error', 'Amount too small to process.');
+        }
+
+        $charge = $stripe->charges->create([
+            'amount' => $amount,
+            'currency' => 'usd',
+            'source' => $request->stripeToken,
+            'description' => 'POS Checkout Payment',
+        ]);
+
+       return view('pos.stripe.receipt', compact('receipt'))->with('success', 'Payment successful!');
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Payment failed: ' . $e->getMessage());
+    }
+}
+
+
 }

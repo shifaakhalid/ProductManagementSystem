@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
+
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PaymentDetailsController;
 // Homepage
 Route::get('/', function () {
     return view('welcome');
@@ -71,10 +74,13 @@ Route::view('/businessLogin', 'pos.freetriallogin')->name('freetriallogin');
 Route::post('/business-login', [POSController::class, 'businessLogin'])->name('business-login');
 Route::post('/freetrial', [FreeTrialController::class, 'store'])->name('freetrial.submit');
 
+
 // Onboarding
 Route::view('/onboarding', 'pos.onboarding')->name('onboarding');
 
-Route::get('/onboarding/payment', [OnboardingController::class, 'payment'])->name('onboarding.payment');
+// Route::get('/onboarding/payment', [OnboardingController::class, 'payment'])->name('onboarding.payment');
+Route::view('/onboarding/payment', 'pos.onboarding.paymentdetails')->name('setuppayment');
+
 Route::get('/pos/onboarding/product', [OnboardingController::class, 'product'])->name('onboarding-product');
 Route::post('pos/onboarding/complete', [OnboardingController::class, 'complete'])->name('onboarding.complete');
 Route::get('/pos/onboarding/payment', [OnboardingController::class, 'payment'])->name('onboarding-payment');
@@ -104,9 +110,9 @@ Route::get('/cart', [POSController::class, 'cart'])->name('cart');
 // Route::get('/checkout',[POSController::class, 'store']);
 
 
-
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\PaymentDetailsController;
-
+Route::get('/checkout', [POSController::class, 'checkout'])->name('pos.checkout');
 Route::get('/stripe', [PaymentDetailsController::class, 'stripeForm'])->name('stripe.form');
-Route::post('/stripe/pay', [PaymentDetailsController::class, 'pay'])->name('stripe.pay');
+Route::post('/stripe/pay', [PaymentDetailsController::class, 'store'])->name('stripe.payment');
+Route::post('/receipt/store', [PaymentDetailsController::class, 'storeReceiptDetails'])->name('stripe.receipt');
+Route::get('/receipt/{id}', [PaymentDetailsController::class, 'show'])->name('receipt.view');
+
