@@ -68,7 +68,7 @@
 
 <script src="https://js.stripe.com/v3/"></script>
 <script>
-    var stripe = Stripe("{{ env('STRIPE_KEY') }}");
+    var stripe = ("{{ config('services.stripe.key') }}");
     var elements = stripe.elements();
     var card = elements.create('card');
     card.mount('#card-element');
