@@ -32,6 +32,10 @@ RUN composer install --no-dev --optimize-autoloader
 EXPOSE 10000
 
 # Run migrations then serve the app
+php artisan config:clear && \
+php artisan route:clear && \
+php artisan cache:clear && \
+php artisan view:clear
 CMD php artisan migrate:fresh  --force --seed  && php artisan serve --host=0.0.0.0 --port=10000  && php artisan storage:link
 # Dockerfile
 RUN composer require stripe/stripe-php
