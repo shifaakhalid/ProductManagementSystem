@@ -15,7 +15,7 @@
     <header class="flex items-center justify-between px-6 py-4 bg-white shadow">
         <div class="flex items-center space-x-3">
             <img src="{{ asset('Assets/logo1.png') }}" alt="Logo" class="h-10 w-10 object-contain">
-            <h1 class="text-xl font-bold text-blue-600">Product Manager</h1>
+            <a href="{{ route('index') }}" > <h1 class="text-xl font-bold text-blue-600">Product Manager</h1></a>
         </div>
 
         <div class="flex items-center space-x-4">

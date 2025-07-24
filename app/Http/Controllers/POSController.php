@@ -29,6 +29,7 @@ class POSController extends Controller
         $user = FreeTrial::where('business_email', $credentials['business_email'])->first();
 
         if (Auth::guard('free_trial')->attempt($credentials)) {
+           
             return redirect()->route('onboarding');
         } else {
             return back()->with('error', 'Invalid login credentials');

@@ -29,8 +29,7 @@
 
   <header class="bg-white/80 backdrop-blur shadow-md sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-      <h1 class="text-3xl font-bold gradient-text">SaleMart</h1>
-      <!-- <nav class="space-x-6 text-gray-700 font-medium"> -->
+      <h1 class="text-3xl font-bold gradient-text ">SaleMart</h1></a>
       <nav class="flex items-center space-x-6 text-gray-700 font-medium">
 
 
@@ -68,14 +67,14 @@
             {{ $cartCount }}
           </span>
         </a>
-        <!-- <form method="POST" action="{{ route('home') }}"> -->
-        <!-- @csrf -->
-        <a href="{{ route('home') }}"><button type="submit"
+        <form method="POST" action="{{ route('logout') }}">
+          @csrf
+          <button type="submit"
             class="w-full text-left text-red-600 font-semibold transition">
             🔓 Logout
 
-          </button></a>
-        <!-- </form> -->
+          </button>
+        </form>
       </nav>
     </div>
 

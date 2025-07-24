@@ -16,43 +16,45 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentDetailsController;
-// Homepage
-Route::get('/', function () {
-    return view('welcome');
+
+
+
+Route::prefix('user')->middleware('auth')->group(function()
+{
+    Route::middleware(['auth', 'ensure.onboarded'])->group(function () {
+        Route::get('/shop', [POSController::class, 'shop'])->name('shop');
+    });
+});
+Route::get('/',  function () {
+    return view('pos.home');
 });
 
+// Homepage
+// Route::get('/welcome', function () {
+//     return view('welcome');
+// });
+Route::view('/productManager', 'welcome')->name('welcome');
 // Auth Routes
 Route::view('/register', 'register')->name('register');
 Route::post('/registerSave', [UserController::class, 'register'])->name('registerSave');
 Route::view('/login', 'login')->name('login');
 Route::post('/loginMatch', [UserController::class, 'login'])->name('loginMatch');
 
-// Dashboard & Static Pages
+
 Route::get('index', [UserController::class, 'indexPage'])->name('index');
-Route::view('create', 'create')->name('create');
-Route::view('store', 'store')->name('store');
-Route::view('show', 'show')->name('show');
 
-
-// Role-based Access
-// Route::middleware(['auth', 'role:admin'])->group(function () {
-//     Route::get('/admin', fn() => 'Welcome Admin');
-// });
-
-// Route::middleware(middleware: ['auth', 'role:manager,cashier'])->group(function () {
-//     Route::get('/pos', fn() => 'POS Area');
-// });
-
-// Route::middleware(['auth'])->group(function () {
-//     Route::resource('products', ProductController::class);
-    // ya individually:
-    // Route::get('/dashboard', [DashboardController::class, 'index']);
-// });
+Route::resource('products', ProductController::class)->names([
+    'index' => 'products.index',
+    'create' => 'products.create',
+    'store' => 'products.store',
+    'show' => 'products.show',
+    'edit' => 'products.edit',
+    'update' => 'products.update',
+    'destroy' => 'products.destroy',
+]);
 
 
 
-// full CRUD: index, show, create, store, edit, update, destroy
-Route::resource('products', ProductController::class);
 
 Route::post('/logout', function () {
     Auth::logout(); 
@@ -91,22 +93,28 @@ Route::get('/pos/onboarding/payment', [OnboardingController::class, 'payment'])-
 
 //products shop
 Route::get('/pos/products', [POSController::class, 'getProducts'])->name('pos.products');
-Route::get('/shop', [POSController::class, 'shop'])->name('shop');
-// Route::view('/shop', [POSController::class, 'shop'])->name('shop');
+
 //search
 Route::get('/search', [POSController::class, 'search'])->name('search');
 
 //dashboard
-Route::view('/pos/dashboard', 'pos.posdashboard')->name('dashboard');
+Route::get('/pos/dashboard', [PaymentDetailsController::class, 'index'])
+    ->middleware(['auth', 'ensure.onboarded'])
+    ->name('dashboard');
 
+Route::get('/pos/dashboard', [PaymentDetailsController::class, 'ordersdaily'])->name('dashboard');
 
 // cart
+
+  Route::middleware(['auth', 'ensure.onboarded'])->group(function () {
 Route::post('/pos/complete-sale', [POSController::class, 'completeSale']);
 Route::post('/cart/add', [POSController::class, 'addToCart'])->name('addToCart');
 Route::post('/cart/update', [POSController::class, 'update'])->name('cart.update');
 Route::post('/cart/updateCart', [POSController::class, 'updateCartBadge'])->name('cart.updateCartbadge');
 Route::post('/cart/remove', [POSController::class, 'remove'])->name('cart.remove');
 Route::get('/cart', [POSController::class, 'cart'])->name('cart');
+    });
+
 // Route::get('/checkout',[POSController::class, 'store']);
 
 
@@ -116,3 +124,6 @@ Route::post('/stripe/pay', [PaymentDetailsController::class, 'store'])->name('st
 Route::post('/receipt/store', [PaymentDetailsController::class, 'storeReceiptDetails'])->name('stripe.receipt');
 Route::get('/receipt/{id}', [PaymentDetailsController::class, 'show'])->name('receipt.view');
 
+
+//logout
+Route::post('/logout', [FreeTrialController::class, 'logout'])->name('logout');

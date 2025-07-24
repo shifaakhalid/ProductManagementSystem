@@ -9,6 +9,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FreeTrial;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -50,5 +51,14 @@ class FreeTrialController extends Controller
         return redirect()->route('freetriallogin')->with('success', 'Free trial started! Check your email.');
     }
  
+public function logout(Request $request)
+{
+    Auth::logout(); // user logout
+
+    $request->session()->invalidate();     // session invalidate
+    $request->session()->regenerateToken(); // CSRF token regenerate
+
+    return redirect('/freetrial'); // ya kahin aur redirect
+}
 
 }

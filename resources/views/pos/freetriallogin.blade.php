@@ -33,7 +33,7 @@
         <input type="password" name="business_password" class="w-full p-3 border border-gray-300 rounded-lg" required>
       </div>
 
-     <button type="submit" class="w-full bg-gradient-to-r from-pink-500 to-blue-500 text-white py-3 rounded-lg font-semibold hover:scale-105 transition">Start Free Trial</button>
+     <button type="submit" class="w-full bg-gradient-to-r from-pink-500 to-blue-500 text-white py-3 rounded-lg font-semibold hover:scale-105 transition">Log In</button>
     </form>
   </section>
 </div>
