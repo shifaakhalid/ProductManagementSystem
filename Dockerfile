@@ -33,4 +33,5 @@ EXPOSE 10000
 
 # Run migrations then serve the app
 CMD php artisan migrate:fresh  --force --seed  && php artisan serve --host=0.0.0.0 --port=10000  && php artisan storage:link
-composer require stripe/stripe-php
+# Dockerfile
+RUN composer require stripe/stripe-php
