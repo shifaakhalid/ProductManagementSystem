@@ -1,47 +1,36 @@
 FROM php:8.2-fpm
 
-Install system dependencies
-
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
-build-essential \
-libpng-dev \
-libjpeg-dev \
-libfreetype6-dev \
-libonig-dev \
-libxml2-dev \
-zip \
-unzip \
-curl \
-git \
-libzip-dev \
-&& docker-php-ext-configure gd --with-freetype --with-jpeg \
-&& docker-php-ext-install pdo pdo_mysql mbstring exif pcntl zip gd
+    build-essential \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    curl \
+    git \
+    libzip-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl zip gd
 
-Install Composer
-
+# Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-Set working directory
-
+# Set working directory
 WORKDIR /var/www
 
-Copy existing application
-
+# Copy existing application
 COPY . .
 
-Install PHP dependencies
-
+# Install PHP dependencies
+RUN composer require stripe/stripe-php
 RUN composer install --no-dev --optimize-autoloader
 
-Expose HTTP port
-
+# Expose HTTP port
 EXPOSE 10000
 
-Run migrations then serve the app
-
-CMD php artisan migrate:fresh  --force --seed  && php artisan serve --host=0.0.0.0 --port=10000  && php artisan storage:link
-
-Dockerfile
-
-RUN composer require stripe/stripe-php
-
+# Run migrations then serve the app
+CMD php artisan migrate:fresh --force --seed && php artisan storage:link && php artisan serve --host=0.0.0.0 --port=10000
