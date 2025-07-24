@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl zip gd
+RUN composer global config --no-plugins allow-plugins.composer/installers true
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -29,7 +30,7 @@ WORKDIR /var/www
 COPY . .
 
 # Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --optimize-autoloader
 
 # Laravel Artisan Commands
 RUN php artisan config:clear && \
