@@ -53,12 +53,12 @@ class FreeTrialController extends Controller
  
 public function logout(Request $request)
 {
-    Auth::logout(); // user logout
+    Auth::logout(); 
 
-    $request->session()->invalidate();     // session invalidate
-    $request->session()->regenerateToken(); // CSRF token regenerate
+    $request->session()->invalidate();  
+    $request->session()->regenerateToken(); 
 
-    return redirect('/freetrial'); // ya kahin aur redirect
+    return redirect('/freetrial'); 
 }
 
 }
