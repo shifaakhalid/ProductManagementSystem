@@ -46,7 +46,7 @@ class UserController extends Controller
     ]);
 
     if (Auth::attempt($credentials)) {
-        return redirect()->route('onboarding');
+        return redirect()->route('index');
     } else {
         return back()->withErrors(['email' => 'Invalid login credentials']);
     }
