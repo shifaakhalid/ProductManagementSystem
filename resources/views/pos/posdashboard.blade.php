@@ -40,7 +40,7 @@
             <h3 class="text-xl font-semibold text-gray-800 mb-2">🛒 View Cart</h3>
             <p class="text-sm text-gray-600">See current cart items and proceed to checkout.</p>
         </a>
-        <a href="{{ route('onboarding') }}"
+        <a href="{{ route('dashboard') }}"
             class="bg-white border border-gray-200 p-6 rounded-2xl shadow hover:shadow-md transition">
             <h3 class="text-xl font-semibold text-gray-800 mb-2">💸 Point of Sale</h3>
             <p class="text-sm text-gray-600">Complete transactions quickly and easily.</p>
