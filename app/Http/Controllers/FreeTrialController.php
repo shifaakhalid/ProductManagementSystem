@@ -47,6 +47,8 @@ class FreeTrialController extends Controller
 
         session(['setup_done' => true]);
 
-        return redirect()->route('onboarding')->with('success', 'Free trial started! Check your email.');
+        return redirect()->route('freetriallogin')->with('success', 'Free trial started! Check your email.');
     }
+ 
+
 }
