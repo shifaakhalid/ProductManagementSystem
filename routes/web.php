@@ -60,7 +60,7 @@ Route::prefix('pos/onboarding')->group(function () {
 
 
 //POS System Routes
-Route::prefix('pos')->middleware(['auth', 'ensure.onboarded'])->group(function () {
+Route::prefix('pos')->middleware(['auth'])->group(function () {
 
     // POS Shop & Products
     Route::get('/products', [POSController::class, 'getProducts'])->name('pos.products');
