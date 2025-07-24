@@ -117,4 +117,4 @@ Route::get('/receipt/{id}', [PaymentDetailsController::class, 'show'])->name('re
 
 
 //logout
-Route::post('/logout', [FreeTrialController::class, 'logout'])->name('logout'); yeh mujhe maintain kar k dedo but please routes change nhi Karna qk system pehle hi bana hua 
+Route::post('/logout', [FreeTrialController::class, 'logout'])->name('logout'); 
