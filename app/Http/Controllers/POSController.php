@@ -30,7 +30,7 @@ class POSController extends Controller
 
         if (Auth::guard('free_trial')->attempt($credentials)) {
            
-            return redirect()->route('onboarding');
+            return redirect()->route('index');
         } else {
             return back()->with('error', 'Invalid login credentials');
         }
