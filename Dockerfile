@@ -27,17 +27,17 @@ COPY . .
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
-
+RUN php artisan config:clear && 
+    php artisan route:clear && 
+    php artisan cache:clear && 
+    php artisan view:clear
 
 
 # Expose HTTP port
 EXPOSE 10000
 
 # Run migrations then serve the app
-RUN php artisan config:clear && 
-    php artisan route:clear && 
-    php artisan cache:clear && 
-    php artisan view:clear
+
 
 CMD php artisan migrate:fresh  --force --seed  && php artisan serve --host=0.0.0.0 --port=10000  && php artisan storage:link
 # Dockerfile
