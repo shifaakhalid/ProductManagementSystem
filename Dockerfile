@@ -27,9 +27,9 @@ COPY . .
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
-RUN php artisan config:clear && 
-    php artisan route:clear && 
-    php artisan cache:clear && 
+RUN php artisan config:clear && \
+    php artisan route:clear && \
+    php artisan cache:clear && \
     php artisan view:clear
 
 
