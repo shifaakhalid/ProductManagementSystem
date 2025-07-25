@@ -34,7 +34,7 @@ class PaymentDetailsController extends Controller
             'stripeToken' => 'required|string',
         ]);
 
-        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+        $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
 
         try {
             $amount = round($request->totalWithTax * 100); // convert to cents
@@ -61,13 +61,13 @@ class PaymentDetailsController extends Controller
 
 public function storeReceiptDetails(Request $request)
 {
-    // Validate input first
+   
     $request->validate([
         'totalWithTax' => 'required|numeric|min:0.01',
         'stripeToken' => 'required|string',
     ]);
 
-    // Get the cart from session
+
     $products = session('cart', []);
 
     // Calculate subtotal, tax, and total
@@ -77,7 +77,6 @@ public function storeReceiptDetails(Request $request)
     $tax = $subtotal * 0.13;
     $total = $subtotal + $tax;
 
-    // Get user from free_trial guard
 $user = Auth::guard('free_trial')->user();
 if ($user) {
      $user->name;
@@ -95,11 +94,12 @@ if ($user) {
         'total_amount' => $total,
         'payment_method' => 'Stripe',
         'payment_status' => 'Paid',
-        'transaction_id' => $request->stripeToken, // You might want to store the actual charge ID later
+        'transaction_id' => $request->stripeToken, 
     ]);
 
-    // Proceed with Stripe charge
-    $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+
+$stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
+
 
     try {
         $amount = round($request->totalWithTax * 100); // cents
