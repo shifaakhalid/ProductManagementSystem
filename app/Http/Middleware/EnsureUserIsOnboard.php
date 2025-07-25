@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 class EnsureUserIsOnboard
 {
    
-            return $next($request);
+      //
     
 
 }
